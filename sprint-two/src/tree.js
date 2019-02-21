@@ -39,7 +39,6 @@ treeMethods.contains = function (target) {
       recurse(child);
     }
   };
-
   recurse(this);
   // check if there was at least one occurance of the target
   return occurances.length >= 1;
