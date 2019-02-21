@@ -28,6 +28,7 @@ stackMethods.push = function (value) {
 stackMethods.pop = function () {
   if (this.top > 0) {
     let topMostEl = this.storage[this.top - 1];
+    console.log(this.storage[this.top-1])
     delete this.storage[this.top - 1];
     this.top--;
     return topMostEl;
@@ -37,3 +38,4 @@ stackMethods.pop = function () {
 stackMethods.size = function () {
   return this.top
 };
+
