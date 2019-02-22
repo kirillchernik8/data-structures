@@ -40,5 +40,13 @@ describe('tree', function() {
     expect(tree.contains(7)).to.equal(true);
     expect(tree.contains(8)).to.equal(true);
   });
+ 
 
+  it('Should disassociate the tree with its parent (in both directions)', function(){
+    let tree1 = Tree(5);
+    tree1.addChild(6);
+    tree1.addChild(8);
+    tree1.removeFromParent(6);
+    expect(tree1.children.length).to.equal(1);
+  })
 });

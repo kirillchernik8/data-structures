@@ -29,16 +29,19 @@ treeMethods.addChild = function (value) {
 treeMethods.removeFromParent = function (val) {
   // create a recursive function
   function recurseToFindKid(current) {
-    // create a base case: if looking for root return the error
-    if (current.value === val) {
-      return ('cannot remove the root');
+    // create a base case: if looking for root, check all the kids and splice the kid
+    if (current.value === val) { 
+
+      for(let i = 0; i < current.parent.children.length; i++) {
+        if(current.parent.children[i].value === val) {
+           current.parent.children.splice(i, 1)
+        }
+      }
+      current.parent = null;
     } else {
-      // otherwise traverse though all the children 
+      // otherwise traverse though all the children recursively
       current.children.forEach((kid) => {
-        // store copy of the child;
-        let siblings = kid.parent.children = kid;
-        // and set the parent to null; 
-        siblings.parent = null;
+        recurseToFindKid(kid)
       })
     }
   }
@@ -70,11 +73,11 @@ treeMethods.contains = function (target) {
 /*
  * Complexity: What is the time complexity of the above functions?
 
-  1) addChild is O(1) as we only need to push the new tree into an array.
+  1) addChild is O(1) as we only need to push the new tree into an array
 
   2) contains, on contrary, is Linear O(n) as in the worst case scenario we have
-     to go through each element in the tree.
+     to go through each element in the tree
  
   3) removeFromParent is of O(n log(n)) complexity as it involves a linear 
-     function inside the recursive one.
+     function inside the recursive one;
  */
