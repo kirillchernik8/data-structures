@@ -39,3 +39,5 @@ stackMethods.size = function () {
   return this.top
 };
 
+/// we have to make all the properties the properties of the inctsnce 
+//functional shared not popular

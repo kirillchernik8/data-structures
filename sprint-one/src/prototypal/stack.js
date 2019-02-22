@@ -27,3 +27,10 @@ stackMethods.size = function() {
   return this.top;
 }
 
+// we can use anything as a prototype to create an object
+
+/*
+var a = {x: 10}; 
+var b = Object.create(a);
+b.x = 10;
+ */

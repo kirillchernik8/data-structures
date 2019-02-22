@@ -35,3 +35,9 @@ var Stack = function () {
   
   return someInstance;
 };
+
+// +++ can use closures and refer to them within function - safety reasons 
+// stack.push ('a') opposed to storage['bla'] = vbal
+// therefore limiting how much other developers can do about this structure / mess up
+
+// --- methods for each instance --> space complexity++
