@@ -1,10 +1,9 @@
 var Tree = function (value) {
   var newTree = {};
   newTree.value = value;
-
   // your code here
   newTree.children = [];
-  // fix me
+
   extend(newTree, treeMethods)
   return newTree;
 };
@@ -33,7 +32,7 @@ treeMethods.contains = function (target) {
       occurances.push(element.value)
     };
     // for each child of the root
-      //run the recursive function 
+    //run the recursive function 
     for (let i = 0; i < element.children.length; i++) {
       let child = element.children[i];
       recurse(child);
@@ -54,3 +53,4 @@ treeMethods.contains = function (target) {
   to go through each element in the tree
 
  */
+
