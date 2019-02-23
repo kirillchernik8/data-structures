@@ -30,22 +30,37 @@ treeMethods.removeFromParent = function (val) {
   // create a recursive function
   function recurseToFindKid(current) {
     // create a base case: if looking for root, check all the kids and splice the kid
-    if (current.value === val) { 
-
-      for(let i = 0; i < current.parent.children.length; i++) {
-        if(current.parent.children[i].value === val) {
-           current.parent.children.splice(i, 1)
+    if (current.value === val) {
+      for (let i = 0; i < current.parent.children.length; i++) {
+        if (current.parent.children[i].value === val) {
+          current.parent.children.splice(i, 1)
         }
       }
       current.parent = null;
     } else {
       // otherwise traverse though all the children recursively
       current.children.forEach((kid) => {
-        recurseToFindKid(kid)
+        recurseToFindKid(kid);
       })
     }
   }
-  recurseToFindKid(this)
+  recurseToFindKid(this);
+};
+
+treeMethods.traverse = function (cb) {
+  // let result = Tree()
+  function recurse(current) {
+    if (current) {
+      current.value = cb(current.value)
+      if (current.parent) {
+        current.parent = cb(current.parent.value)
+      }
+    }
+    if (current.children.length > 0) {
+      current.children.forEach((child) => recurse(child))
+    }
+  }
+  recurse(this)
 }
 
 treeMethods.contains = function (target) {
@@ -80,4 +95,6 @@ treeMethods.contains = function (target) {
  
   3) removeFromParent is of O(n log(n)) complexity as it involves a linear 
      function inside the recursive one;
+
+  4) Traverse uses the recursive approach, therefore, O( log n)
  */
