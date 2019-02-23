@@ -4,6 +4,7 @@ var BinarySearchTree = function (value) {
   binaryTree.left = null;
   binaryTree.right = null;
   binaryTree.childNodes = [];
+  binaryTree.parent = null;
   return binaryTree;
 };
 
@@ -19,17 +20,22 @@ binaryTreeMethods.insert = function (value) {
     if (onNode.value > value && onNode.left === null) {
       onNode.left = BinarySearchTree(value);
       onNode.childNodes.push(onNode.left);
+      onNode.left.parent = onNode;
+  
       // 2. And if the current value is less than...
       //    ... and does not have a right child
 
     } else if (onNode.value < value && onNode.right === null) {
       onNode.right = BinarySearchTree(value);
       onNode.childNodes.push(onNode.right);
+      onNode.right.parent = onNode;
+   
       // otherwise (if the node has two children alerady)...
-    } else if (onNode.value > value) {
-      recurse(onNode.left);
-    } else if (onNode.value < value) {
-      recurse(onNode.right);
+
+    } else if ( onNode.value > value )  {
+        recurse(onNode.left);   
+    } else if (onNode.value < value ) {
+        recurse(onNode.right);
     }
   }
   recurse(this);
@@ -73,22 +79,29 @@ binaryTreeMethods.depthFirstLog = function (cb) {
   recurseToMap(this);
 };
 
-binaryTreeMethods.breadthFirstLog = function () {
+binaryTreeMethods.breadthFirstLog = function (cb) {
   let result = [];
-  result.push(this.value)
+  result.push(cb(this))
+
+  // let visited = false;
   function recurse(onNode) {
-    if (onNode.left !== null && onNode.right !== null) {
-      result.push(onNode.childNodes[0].value, onNode.childNodes[1].value)
+    if (onNode.left !== null && onNode.right !== null ) {
+      result.push(cb(onNode.childNodes[0]), cb(onNode.childNodes[1]))
     }
-    
-    if (onNode.childNodes.length > 0) {
-      onNode.childNodes.forEach(kid => recurse(kid))
-    }
+    if(onNode.childNodes.length > 0){
+    onNode.childNodes.forEach(kid => recurse(kid))
   }
+}
   recurse(this);
   return result;
 }
 
+// binaryTreeMethods.checkBalanced = function (){
+//   let allNodes = this.breadthFirstLog() 
+
+  
+//   return allNodes;
+// }
 
 
 // recursiveLog(this)
@@ -101,3 +114,19 @@ binaryTreeMethods.breadthFirstLog = function () {
    therefore, the time complexity for all of them if Logarithmic. O(log(n))
 
  */
+var binarySearchTree = BinarySearchTree(6)
+
+binarySearchTree.insert(3);
+binarySearchTree.insert(9);
+binarySearchTree.insert(1);
+binarySearchTree.insert(4);
+binarySearchTree.insert(8)
+binarySearchTree.insert(11);
+// console.log(binarySearchTree.checkBalanced())
+let func = (x) => { 
+  if(x.parent){
+  return x.parent.value;
+  }
+}
+console.log(binarySearchTree.breadthFirstLog(func))
+console.log(binarySearchTree)
